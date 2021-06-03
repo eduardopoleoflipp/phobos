@@ -180,8 +180,12 @@ module Phobos
       configs = Phobos.config.consumer_hash.select do |k|
         Constants::KAFKA_CONSUMER_OPTS.include?(k)
       end
+      assignment_strat = Phobos::RoundRobinAssignmentStrategy.new
       configs.merge!(@kafka_consumer_opts)
-      @kafka_client.consumer(**{ group_id: group_id }.merge(configs))
+      @kafka_client.consumer(**{
+        group_id: group_id,
+        assignment_strategy: assignment_strat
+      }.merge(configs))
     end
 
     def compact(hash)

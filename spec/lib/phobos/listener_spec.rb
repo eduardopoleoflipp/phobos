@@ -294,9 +294,13 @@ RSpec.describe Phobos::Listener do
     let(:default_consumer_opts) { Phobos.config.consumer_hash.merge(group_id: group_id) }
 
     it 'uses the consumer defined options' do
+      strat_instance = Phobos::RoundRobinAssignmentStrategy.new
+      allow(Phobos::RoundRobinAssignmentStrategy).to receive(:new) { strat_instance }
+      consumer_options = default_consumer_opts.merge(assignment_strategy: strat_instance)
+
       expect_any_instance_of(Kafka::Client)
         .to receive(:consumer)
-        .with(default_consumer_opts)
+        .with(consumer_options)
         .once
         .and_call_original
 
@@ -321,9 +325,13 @@ RSpec.describe Phobos::Listener do
       end
 
       it 'uses the custom options' do
+        strat_instance = Phobos::RoundRobinAssignmentStrategy.new
+        allow(Phobos::RoundRobinAssignmentStrategy).to receive(:new) { strat_instance }
+        consumer_options = kafka_consumer_opts.merge(assignment_strategy: strat_instance)
+
         expect_any_instance_of(Kafka::Client)
           .to receive(:consumer)
-          .with(kafka_consumer_opts)
+          .with(consumer_options)
           .once
           .and_call_original
 
