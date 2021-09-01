@@ -1,0 +1,100 @@
+logger:
+  file: log/phobos.log
+  stdout_json: false
+  level: info
+  ruby_kafka:
+    level: error
+
+kafka:
+  client_id: phobos
+  connect_timeout:
+  socket_timeout:
+  ssl_ca_cert:
+  ssl_client_cert:
+  ssl_client_cert_key:
+  seed_brokers:
+    - localhost:9092
+
+producer:
+  ack_timeout: 5
+  required_acks: :all
+  max_retries: 2
+  retry_backoff: 1
+  max_buffer_size: 1000
+  max_buffer_bytesize: 10000000
+  compression_codec:
+  compression_threshold: 1
+  max_queue_size: 1000
+  delivery_threshold: 0
+  delivery_interval: 0
+  persistent_connections: false
+
+consumer:
+  session_timeout: 30
+  offset_commit_interval: 10
+  offset_commit_threshold: 0
+  offset_retention_time:
+  heartbeat_interval: 10
+
+backoff:
+  min_ms: 1000
+  max_ms: 60000
+
+listeners:
+  - handler: MyHandler1
+    topic: topic1
+    group_id: test
+    max_concurrency: 3
+    min_bytes: 77777
+    start_from_beginning: true
+    max_bytes_per_partition: 524288 # 512 KB
+    min_bytes: 1
+    max_wait_time: 5
+    force_encoding:
+    delivery: message
+    backoff:
+      min_ms: 500
+      max_ms: 10000
+    session_timeout: 30
+    offset_commit_interval: 15
+    offset_commit_threshold: 5
+    offset_retention_time: 172800
+    heartbeat_interval: 20
+  - handler: MyHandler2
+    topic: topic2
+    group_id: test
+    max_concurrency: 3
+    min_bytes: 77777
+    start_from_beginning: true
+    max_bytes_per_partition: 524288 # 512 KB
+    min_bytes: 1
+    max_wait_time: 5
+    force_encoding:
+    delivery: message
+    backoff:
+      min_ms: 500
+      max_ms: 10000
+    session_timeout: 30
+    offset_commit_interval: 15
+    offset_commit_threshold: 5
+    offset_retention_time: 172800
+    heartbeat_interval: 20
+  - handler: MyHandler3
+    topic: topic3
+    group_id: test
+    max_concurrency: 3
+    min_bytes: 77777
+    start_from_beginning: true
+    max_bytes_per_partition: 524288 # 512 KB
+    min_bytes: 1
+    max_wait_time: 5
+    force_encoding:
+    delivery: message
+    backoff:
+      min_ms: 500
+      max_ms: 10000
+    session_timeout: 30
+    offset_commit_interval: 15
+    offset_commit_threshold: 5
+    offset_retention_time: 172800
+    heartbeat_interval: 20
